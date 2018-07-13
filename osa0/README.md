@@ -1,4 +1,4 @@
-0.3 muistiinpanojen sivu
+### 0.3 muistiinpanojen sivu
 
-![03.png][03]
+![03](03.png)
 
