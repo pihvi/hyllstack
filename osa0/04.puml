@@ -1,0 +1,22 @@
+@startuml
+skinparam handwritten true
+actor User as A
+participant Browser as B
+participant Server as C
+
+A -> B: Enter new note and press "Talleta"
+B -> C: POST /new_notes with new note data
+C --> B: 302 redirect to /notes
+B -> C: Get /notes
+C --> B: Return HTML of the notes page
+note left:: Parse HTML
+B -> C: Get main.css
+C --> B: return main.css
+note left:: Parse CSS
+B -> C: Get main.js
+C --> B: return main.js
+note left:: Parse main.js
+B -> C: Get data.json
+B -> B: add each item in data.json as an element to DOM
+B --> A: Show the page with the form and items
+@enduml
