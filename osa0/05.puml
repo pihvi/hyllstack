@@ -1,0 +1,20 @@
+@startuml
+skinparam handwritten true
+actor User as A
+participant Browser as B
+participant Server as C
+
+A -> B: Enter address:\nhttps://fullstack-exampleapp.herokuapp.com/spa
+B -> C: HTTP (over TLS) GET /spa
+C --> B: Return HTML of the spa page
+note left:: Parse HTML
+B -> C: Get main.css
+C --> B: return main.css
+note left:: Parse CSS
+B -> C: Get spa.js
+C --> B: return spa.js
+note left:: Parse spa.js
+B -> C: Get data.json
+B -> B: add each item in data.json as an element to DOM
+B --> A: Show the page with the form and items
+@enduml

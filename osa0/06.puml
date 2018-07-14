@@ -1,0 +1,12 @@
+@startuml
+skinparam handwritten true
+actor User as A
+participant Browser as B
+participant Server as C
+
+A -> B: Enter new note and press "Talleta"
+B -> C: POST /new_notes_spa with new note data
+C --> B: 201 {"message":"note created"}
+B -> B: add created item as an element to DOM
+B --> A: Show the page with the form and items
+@enduml
