@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 
 const Otsikko = p => <h1>{p.kurssi}</h1>
 const Sisalto = p => [
-  <p>{p.osa1} {p.tehtavia1}</p>,
-  <p>{p.osa2} {p.tehtavia2}</p>,
-  <p>{p.osa3} {p.tehtavia3}</p>]
+  <p key={1}>{p.osa1} {p.tehtavia1}</p>,
+  <p key={2}>{p.osa2} {p.tehtavia2}</p>,
+  <p key={3}>{p.osa3} {p.tehtavia3}</p>]
 const Yhteensa = p => <p>yhteensä {p.tehtavia1 + p.tehtavia2 + p.tehtavia3} tehtävää</p>
 
 const App = () => {
@@ -20,8 +20,8 @@ const App = () => {
   return (
     <div>
       <Otsikko kurssi={kurssi}/>
-      <Sisalto osa1={osa1} osa3={osa3} osa2={osa2} tehtavia1={tehtavia1}/>
-      <Yhteensa/>
+      <Sisalto osa1={osa1} osa3={osa3} osa2={osa2} tehtavia1={tehtavia1} tehtavia2={tehtavia2} tehtavia3={tehtavia3}/>
+      <Yhteensa tehtavia1={tehtavia1} tehtavia2={tehtavia2} tehtavia3={tehtavia3}/>
     </div>
   )
 }
