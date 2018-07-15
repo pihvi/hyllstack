@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Button = p => <button onClick={p.handleClick}>{p.name}</button>
-const Statistic = ({text, val, perc}) => <div>{text}: {val * (perc ? 100 : 0)} {perc ? '%' : ''}</div>
+const Statistic = ({text, val, perc}) => <div>{text}: {val * (perc ? 100 : 1)} {perc ? '%' : ''}</div>
 const Statistics = ({state}) =>
   <div>
     <h1>Statistiikka</h1>
