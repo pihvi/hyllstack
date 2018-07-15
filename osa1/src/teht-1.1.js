@@ -1,14 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Osa = p => <p>{p.osa} {p.tehtavia}</p>
 const Otsikko = p => <h1>{p.kurssi}</h1>
-const Sisalto = p =>
-  <div>
-    <Osa osa={p.osa1} tehtavia={p.tehtavia1}/>
-    <Osa osa={p.osa2} tehtavia={p.tehtavia2}/>
-    <Osa osa={p.osa3} tehtavia={p.tehtavia3}/>
-  </div>
+const Sisalto = p => [
+  <p key={1}>{p.osa1} {p.tehtavia1}</p>,
+  <p key={2}>{p.osa2} {p.tehtavia2}</p>,
+  <p key={3}>{p.osa3} {p.tehtavia3}</p>]
 const Yhteensa = p => <p>yhteensä {p.tehtavia1 + p.tehtavia2 + p.tehtavia3} tehtävää</p>
 
 const App = () => {
