@@ -25,12 +25,14 @@ class App extends React.Component {
     }
   }
 
+  increaseType = type => () => this.setState({[type]: this.state[type] + 1})
+
   render() {
     return <div>
       <h1>Anna palautetta</h1>
-      <Button name='hyvä' handleClick={() => this.setState({good: this.state.good + 1})}/>
-      <Button name='neutraali' handleClick={() => this.setState({neutral: this.state.neutral + 1})}/>
-      <Button name='huono' handleClick={() => this.setState({bad: this.state.bad + 1})}/>
+      <Button name='hyvä' handleClick={this.increaseType('good')}/>
+      <Button name='neutraali' handleClick={this.increaseType('neutral')}/>
+      <Button name='huono' handleClick={this.increaseType('bad')}/>
       <Statistics state={this.state}/>
     </div>
   }
