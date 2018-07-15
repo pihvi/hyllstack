@@ -1,8 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const App = () => {
+  console.log('Hello from komponentti')
+  return (
+    <div>
+      <p>Hello world</p>
+    </div>
+  )
+}
+
+ReactDOM.render(<App/>, document.getElementById('root'))
