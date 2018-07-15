@@ -5,7 +5,8 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: rand()
+      selected: rand(),
+      votes: new Array(props.anecdotes.length)
     }
   }
 
@@ -14,10 +15,22 @@ class App extends React.Component {
       <div>
         {this.props.anecdotes[this.state.selected]}
         <br/>
+        <br/>
+        has {this.state.votes[this.state.selected] || 0} votes
+        <br/>
+        <br/>
+        <button onClick={() => this.setState({votes: vote(this.state)})}>vote</button>
         <button onClick={() => this.setState({selected: rand()})}>next</button>
       </div>
     )
   }
+}
+
+const vote = state => {
+  const old = state.votes[state.selected]
+  const votes = [...state.votes]
+  votes[state.selected] = old ? old + 1 : 1
+  return votes
 }
 
 const anecdotes = [
