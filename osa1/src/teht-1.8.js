@@ -6,13 +6,11 @@ const Statistic = ({text, val, perc}) => <div>{text}: {val * (perc ? 100 : 1)} {
 const Statistics = ({state}) =>
   <div>
     <h1>Statistiikka</h1>
-    {state.good || state.neutral || state.bad ? [
-      <Statistic key='1' text='hyvä' val={state.good}/>,
-      <Statistic key='2' text='neutraali' val={state.neutral}/>,
-      <Statistic key='3' text='huono' val={state.bad}/>,
-      <Statistic key='4' text='keskiarvo' val={(state.bad * -1 + state.good) / (state.bad + state.good + state.neutral)}/>,
-      <Statistic key='5' text='positiivisia' perc={true} val={state.good / (state.bad + state.good + state.neutral)}/>,
-    ] : <p>ei yhtään palautetta annettu</p>}
+    <Statistic text='hyvä' val={state.good}/>
+    <Statistic text='neutraali' val={state.neutral}/>
+    <Statistic text='huono' val={state.bad}/>
+    <Statistic text='keskiarvo' val={(state.bad * -1 + state.good) / (state.bad + state.good + state.neutral)}/>
+    <Statistic text='positiivisia' perc={true} val={state.good / (state.bad + state.good + state.neutral)}/>
   </div>
 
 class App extends React.Component {
