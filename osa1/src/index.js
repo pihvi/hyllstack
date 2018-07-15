@@ -2,6 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Button = p => <button onClick={p.handleClick}>{p.name}</button>
+const Statistics = ({state}) =>
+  <div>
+    <h1>Statistiikka</h1>
+    <div>hyvä: {state.good}</div>
+    <div>neutraali: {state.neutral}</div>
+    <div>huono: {state.bad}</div>
+    <div>keskiarvo: {(state.bad * -1 + state.good) / (state.bad + state.good + state.neutral)}</div>
+    <div>positiivisia: {100 * state.good / (state.bad + state.good + state.neutral)}%</div>
+  </div>
 
 
 class App extends React.Component {
@@ -20,12 +29,7 @@ class App extends React.Component {
       <Button name='hyvä' handleClick={() => this.setState({good: this.state.good + 1})}/>
       <Button name='neutraali' handleClick={() => this.setState({neutral: this.state.neutral + 1})}/>
       <Button name='huono' handleClick={() => this.setState({bad: this.state.bad + 1})}/>
-      <h1>Statistiikka</h1>
-      <div>hyvä: {this.state.good}</div>
-      <div>neutraali: {this.state.neutral}</div>
-      <div>huono: {this.state.bad}</div>
-      <div>keskiarvo: {(this.state.bad * -1 + this.state.good) / (this.state.bad + this.state.good + this.state.neutral)}</div>
-      <div>positiivisia: {100 * this.state.good / (this.state.bad + this.state.good + this.state.neutral)}%</div>
+      <Statistics state={this.state}/>
     </div>
   }
 }
