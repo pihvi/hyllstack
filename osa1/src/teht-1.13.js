@@ -6,8 +6,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       selected: rand(),
-      votes: Array(props.anecdotes.length).fill(0),
-      max: 0
+      votes: new Array(props.anecdotes.length)
     }
   }
 
@@ -20,25 +19,18 @@ class App extends React.Component {
         has {this.state.votes[this.state.selected] || 0} votes
         <br/>
         <br/>
-        <button onClick={() => this.setState(vote(this.state))}>vote</button>
+        <button onClick={() => this.setState({votes: vote(this.state)})}>vote</button>
         <button onClick={() => this.setState({selected: rand()})}>next</button>
-        <h3>most votes:{this.state.max}</h3>
-        {this.props.anecdotes[this.state.max]}
-        <br/>
-        <br/>
-        with {this.state.votes[this.state.max]} votes
       </div>
     )
   }
 }
 
 const vote = state => {
+  const old = state.votes[state.selected]
   const votes = [...state.votes]
-  votes[state.selected] += 1
-  return {
-    votes,
-    max: votes.indexOf(Math.max(...votes))
-  }
+  votes[state.selected] = old ? old + 1 : 1
+  return votes
 }
 
 const anecdotes = [
@@ -50,7 +42,7 @@ const anecdotes = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-const rand = () => parseInt(Math.random() * anecdotes.length, 10)
+const rand = () => parseInt(Math.random() * anecdotes.length)
 
 ReactDOM.render(
   <App anecdotes={anecdotes}/>,
