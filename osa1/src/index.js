@@ -2,15 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Button = p => <button onClick={p.handleClick}>{p.name}</button>
-const Statistic = ({text, val}) => <div>{text}: {val}</div>
+const Statistic = ({text, val, perc}) => <div>{text}: {val * (perc ? 100 : 0)} {perc ? '%' : ''}</div>
 const Statistics = ({state}) =>
   <div>
     <h1>Statistiikka</h1>
-    <Statistic text='hyvä' val={state.good}/>
+    <Statistic text='hyvä' val={state.good} perc={false}/>
     <Statistic text='neutraali' val={state.neutral}/>
     <Statistic text='huono' val={state.bad}/>
     <Statistic text='keskiarvo' val={(state.bad * -1 + state.good) / (state.bad + state.good + state.neutral)}/>
-    <Statistic text='positiivisia' val={state.good / (state.bad + state.good + state.neutral)}/>
+    <Statistic text='positiivisia' perc={true} val={state.good / (state.bad + state.good + state.neutral)}/>
   </div>
 
 class App extends React.Component {
