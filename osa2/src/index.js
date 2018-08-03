@@ -3,19 +3,9 @@ import ReactDOM from 'react-dom'
 
 const Osa = (props) => <p>{props.osa} {props.tehtavia}</p>
 const Otsikko = (props) => <h1>{props.kurssi.nimi}</h1>
-const Sisalto = (props) => {
-  return (
-    <div>
-      {props.kurssi.osat.map(osa => <Osa osa={osa.nimi} tehtavia={osa.tehtavia}/>)}
-    </div>
-  )
-}
+const Sisalto = (props) => props.kurssi.osat.map(osa => <Osa osa={osa.nimi} tehtavia={osa.tehtavia}/>)
 const Kurssi = ({kurssi}) => [<Otsikko kurssi={kurssi}/>, <Sisalto kurssi={kurssi}/>]
-const Yhteensa = ({kurssi}) => {
-  return (
-    <p>yhteensä {kurssi.osat.map(osa => osa.tehtavia).reduce((a, b) => a + b)} tehtävää</p>
-  )
-}
+const Yhteensa = ({kurssi}) => <p>yhteensä {kurssi.osat.map(osa => osa.tehtavia).reduce((a, b) => a + b)} tehtävää</p>
 
 const App = () => {
   const kurssi = {
