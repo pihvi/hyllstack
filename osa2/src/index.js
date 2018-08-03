@@ -10,6 +10,36 @@ const Numbers = ({state}) => {
       .map(p => <div key={p.name}>{p.name}: {p.num}</div>)]
 }
 
+const Addform = ({tissi}) => {
+  return [
+    <h2>Lisää uusi</h2>,
+    <form onSubmit={e => {
+      e.preventDefault()
+      const add = {name: tissi.state.newName, num: tissi.state.newNum}
+      if (!tissi.state.persons.filter(x => x.name === add.name).length) {
+        tissi.setState({
+          persons: tissi.state.persons.concat(add),
+          newName: '',
+          newNum: ''
+        })
+      }
+    }}>
+      <div>
+        nimi: <input value={tissi.state.newName} onChange={e => tissi.setState({
+        newName: e.target.value
+      })}/>
+      </div>
+      <div>
+        numero: <input value={tissi.state.newNum} onChange={e => tissi.setState({
+        newNum: e.target.value
+      })}/>
+      </div>
+      <div>
+        <button type="submit">lisää</button>
+      </div>
+    </form>]
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -36,32 +66,7 @@ class App extends React.Component {
         })}/>
         </div>
 
-        <h2>Lisää uusi</h2>
-        <form onSubmit={e => {
-          e.preventDefault()
-          const add = {name: this.state.newName, num: this.state.newNum}
-          if (!this.state.persons.filter(x => x.name === add.name).length) {
-            this.setState({
-              persons: this.state.persons.concat(add),
-              newName: '',
-              newNum: ''
-            })
-          }
-        }}>
-          <div>
-            nimi: <input value={this.state.newName} onChange={e => this.setState({
-            newName: e.target.value
-          })}/>
-          </div>
-          <div>
-            numero: <input value={this.state.newNum} onChange={e => this.setState({
-            newNum: e.target.value
-          })}/>
-          </div>
-          <div>
-            <button type="submit">lisää</button>
-          </div>
-        </form>
+        <Addform tissi={this}/>
         <Numbers state={this.state}/>
       </div>
     )
