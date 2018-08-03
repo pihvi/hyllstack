@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 
-const Numbers = ({state}) => {
-  return [
+const Numbers = ({state}) => [
     <h2 key={'Numerot title'}>Numerot</h2>,
     state.persons
       .filter(p =>
         state.filter.trim() === '' || p.name.toLowerCase().startsWith(state.filter.toLowerCase()))
       .map(p => <div key={p.name}>{p.name}: {p.num}</div>)]
-}
 
-const Addform = ({tissi}) => {
-  return [
-    <h2>Lisää uusi</h2>,
-    <form onSubmit={e => {
+const Addform = ({tissi}) => [
+  <h2 key={'Add title'}>Lisää uusi</h2>,
+  <form key={'addform'} onSubmit={e => {
       e.preventDefault()
       const add = {name: tissi.state.newName, num: tissi.state.newNum}
       if (!tissi.state.persons.filter(x => x.name === add.name).length) {
@@ -38,7 +35,7 @@ const Addform = ({tissi}) => {
         <button type="submit">lisää</button>
       </div>
     </form>]
-}
+
 
 class App extends React.Component {
   constructor(props) {
