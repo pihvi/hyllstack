@@ -36,6 +36,11 @@ const Addform = ({tissi}) => [
       </div>
     </form>]
 
+const Filter = ({tissi}) => <div>
+  rajaa nimellä: <input value={tissi.state.filter} onChange={e => tissi.setState({
+  filter: e.target.value
+})}/></div>
+
 
 class App extends React.Component {
   constructor(props) {
@@ -57,12 +62,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <div>
-          rajaa nimellä: <input value={this.state.filter} onChange={e => this.setState({
-          filter: e.target.value
-        })}/>
-        </div>
-
+        <Filter tissi={this}/>
         <Addform tissi={this}/>
         <Numbers state={this.state}/>
       </div>
