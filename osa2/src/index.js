@@ -1,6 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 
+const Numbers = ({state}) => {
+  return [
+    <h2 key={'Numerot title'}>Numerot</h2>,
+    state.persons
+      .filter(p =>
+        state.filter.trim() === '' || p.name.toLowerCase().startsWith(state.filter.toLowerCase()))
+      .map(p => <div key={p.name}>{p.name}: {p.num}</div>)]
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -53,12 +62,7 @@ class App extends React.Component {
             <button type="submit">lisää</button>
           </div>
         </form>
-        <h2>Numerot</h2>
-        {this.state.persons
-          .filter(p =>
-            this.state.filter.trim() === '' ||
-            p.name.toLowerCase().startsWith(this.state.filter.toLowerCase()))
-          .map(p => <div key={p.name}>{p.name}: {p.num}</div>)}
+        <Numbers state={this.state}/>
       </div>
     )
   }
