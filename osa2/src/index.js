@@ -18,10 +18,13 @@ class App extends React.Component {
         <h2>Puhelinluettelo</h2>
         <form onSubmit={e => {
           e.preventDefault()
-          this.setState({
-            persons: this.state.persons.concat({name: this.state.newName}),
-            newName: '',
-          })
+          const add = {name: this.state.newName}
+          if (!this.state.persons.filter(x => x.name === add.name).length) {
+            this.setState({
+              persons: this.state.persons.concat(add),
+              newName: '',
+            })
+          }
         }}>
           <div>
             nimi: <input value={this.state.newName} onChange={e => this.setState({
