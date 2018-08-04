@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom'
+import pb from './services/phonebook.js'
 
 const Numbers = ({state}) => [
   <h2 key={'Numerot title'}>Numerot</h2>,
@@ -21,8 +21,7 @@ const Addform = ({tissi}) => [
         newName: '',
         newNum: ''
       })
-      axios
-        .post('http://localhost:3001/persons', add)
+      pb.add(add)
     }
   }}>
     <div>
@@ -58,9 +57,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(res => this.setState({persons: res.data}))
+    pb.getAll().then(res => this.setState({persons: res.data}))
   }
 
   render() {
