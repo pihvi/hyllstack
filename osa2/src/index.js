@@ -27,6 +27,15 @@ const Addform = ({tissi}) => [
         newNum: ''
       })
       pb.add(add)
+    } else {
+      const hit = tissi.state.persons.filter(x => x.name === add.name)[0]
+      hit.num = add.num
+      tissi.setState({
+        persons: tissi.state.persons,
+        newName: '',
+        newNum: ''
+      })
+      pb.update(hit)
     }
   }}>
     <div>
