@@ -2,71 +2,41 @@ import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom'
 
-const Numbers = ({state}) => [
-    <h2 key={'Numerot title'}>Numerot</h2>,
-    state.persons
-      .filter(p =>
-        state.filter.trim() === '' || p.name.toLowerCase().startsWith(state.filter.toLowerCase()))
-      .map(p => <div key={p.name}>{p.name}: {p.num}</div>)]
-
-const Addform = ({tissi}) => [
-  <h2 key={'Add title'}>Lisää uusi</h2>,
-  <form key={'addform'} onSubmit={e => {
-      e.preventDefault()
-      const add = {name: tissi.state.newName, num: tissi.state.newNum}
-      if (!tissi.state.persons.filter(x => x.name === add.name).length) {
-        tissi.setState({
-          persons: tissi.state.persons.concat(add),
-          newName: '',
-          newNum: ''
-        })
-      }
-    }}>
-      <div>
-        nimi: <input value={tissi.state.newName} onChange={e => tissi.setState({
-        newName: e.target.value
-      })}/>
-      </div>
-      <div>
-        numero: <input value={tissi.state.newNum} onChange={e => tissi.setState({
-        newNum: e.target.value
-      })}/>
-      </div>
-      <div>
-        <button type="submit">lisää</button>
-      </div>
-    </form>]
-
-const Filter = ({tissi}) => <div>
-  rajaa nimellä: <input value={tissi.state.filter} onChange={e => tissi.setState({
-  filter: e.target.value
-})}/></div>
-
-
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      persons: [],
-      newName: '',
-      newNum: '',
+      countries: [],
       filter: ''
     }
   }
 
   componentDidMount() {
     axios
-      .get('http://localhost:3001/persons')
-      .then(res => this.setState({persons: res.data}))
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(res => this.setState({countries: res.data}))
   }
 
   render() {
+    const cons = this.state.countries
+      .filter(p =>
+        this.state.filter.trim() === '' || p.name.toLowerCase().indexOf(this.state.filter.toLowerCase()) >= 0)
     return (
       <div>
-        <h2>Puhelinluettelo</h2>
-        <Filter tissi={this}/>
-        <Addform tissi={this}/>
-        <Numbers state={this.state}/>
+        <p>
+          find countries:
+          <input value={this.state.filter} onChange={e => this.setState({
+            filter: e.target.value
+          })}/>
+        </p>
+        {cons.length === 1 ? cons.map(c => <div key={c.name}>
+          <h1>{c.name}</h1>
+          <p>capital: {c.capital}</p>
+          <p>population: {c.population}</p>
+          <p><img width={200} src={c.flag} alt={c.name}/></p>
+        </div>) : ''}
+        {cons.length > 10 ? <div>too many matches ({cons.length}), specify a filter</div> : ''}
+        {cons.length > 1 && cons.length <= 10 ? cons.map(c => <div key={c.name}>{c.name}</div>) : ''}
       </div>
     )
   }
