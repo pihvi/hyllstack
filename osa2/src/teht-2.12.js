@@ -36,7 +36,7 @@ class App extends React.Component {
           <p><img width={200} src={c.flag} alt={c.name}/></p>
         </div>) : ''}
         {cons.length > 10 ? <div>too many matches ({cons.length}), specify a filter</div> : ''}
-        {cons.length > 1 && cons.length <= 10 ? cons.map(c => <div onClick={()=>this.setState({filter:c.name})} key={c.name}>{c.name}</div>) : ''}
+        {cons.length > 1 && cons.length <= 10 ? cons.map(c => <div key={c.name}>{c.name}</div>) : ''}
       </div>
     )
   }
