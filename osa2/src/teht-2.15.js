@@ -7,12 +7,7 @@ const Numbers = ({state}) => [
   state.persons
     .filter(p =>
       state.filter.trim() === '' || p.name.toLowerCase().startsWith(state.filter.toLowerCase()))
-    .map(p => <div key={p.name}>{p.name}: {p.num}
-      <button onClick={
-        () => window.confirm('Poistetaanko ' + p.name + '?') ? pb.delete(p.id).then(() => window.location.reload()) : ''
-      }>poista
-      </button>
-    </div>)]
+    .map(p => <div key={p.name}>{p.name}: {p.num}</div>)]
 
 const Addform = ({tissi}) => [
   <h2 key={'Add title'}>Lisää uusi</h2>,
