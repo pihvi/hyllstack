@@ -1,15 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import pb from './services/phonebook.js'
+import './index.css'
 
-const Numbers = ({state}) => [
+function notsku(tis, msg) {
+  tis.setState({notsku: msg})
+  setTimeout(() => tis.setState({notsku: ''}), 2000)
+}
+
+function del(tis, person) {
+  pb.delete(person.id).then(() => {
+    notsku(tis, 'Poistettu ' + person.name)
+    tis.setState({
+      persons: tis.state.persons.filter(p => p.name !== person.name)
+    })
+  })
+}
+
+const Numbers = ({state, tissi}) => [
   <h2 key={'Numerot title'}>Numerot</h2>,
   state.persons
     .filter(p =>
       state.filter.trim() === '' || p.name.toLowerCase().startsWith(state.filter.toLowerCase()))
     .map(p => <div key={p.name}>{p.name}: {p.num}
       <button onClick={
-        () => window.confirm('Poistetaanko ' + p.name + '?') ? pb.delete(p.id).then(() => window.location.reload()) : ''
+        () => window.confirm('Poistetaanko ' + p.name + '?') ? del(tissi, p) : ''
       }>poista
       </button>
     </div>)]
@@ -27,6 +42,7 @@ const Addform = ({tissi}) => [
         newNum: ''
       })
       pb.add(add)
+      notsku(tissi, 'Lisätty ' + add.name)
     } else {
       const hit = tissi.state.persons.filter(x => x.name === add.name)[0]
       hit.num = add.num
@@ -36,6 +52,7 @@ const Addform = ({tissi}) => [
         newNum: ''
       })
       pb.update(hit)
+      notsku(tissi, 'Päivitetty ' + hit.name)
     }
   }}>
     <div>
@@ -58,6 +75,10 @@ const Filter = ({tissi}) => <div>
   filter: e.target.value
 })}/></div>
 
+const Notsku = ({tissi}) => {
+  if (tissi.state.notsku === '') return <div></div>
+  else return <div className="success">{tissi.state.notsku}</div>
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -66,6 +87,7 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNum: '',
+      notsku: '',
       filter: ''
     }
   }
@@ -77,10 +99,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Notsku tissi={this}/>
         <h2>Puhelinluettelo</h2>
         <Filter tissi={this}/>
         <Addform tissi={this}/>
-        <Numbers state={this.state}/>
+        <Numbers tissi={this} state={this.state}/>
       </div>
     )
   }
