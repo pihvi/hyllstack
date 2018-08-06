@@ -1,14 +1,16 @@
 import axios from 'axios';
 
-const add = entry => axios.post('http://localhost:3001/persons', entry)
-const del = id => axios.delete('http://localhost:3001/persons/' + id)
+const base = 'http://localhost:3001/api'
+
+const add = entry => axios.post(base + '/persons', entry)
+const del = id => axios.delete(base + '/persons/' + id)
 const update = entry => {
   axios
-    .put('http://localhost:3001/persons/' + entry.id, entry)
+    .put(base + '/persons/' + entry.id, entry)
     .catch(() => {
       add(entry)
     })
 }
-const getAll = () => axios.get('http://localhost:3001/persons')
+const getAll = () => axios.get(base + '/persons')
 
 export default {add, getAll, delete: del, update}
