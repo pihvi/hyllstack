@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
-let persons = [{
+const persons = [{
   "name": "Arto Hellas",
   "num": "040-123456",
   "id": 1
