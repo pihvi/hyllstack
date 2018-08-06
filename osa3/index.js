@@ -4,7 +4,8 @@ const app = express()
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
-app.use(morgan('tiny'))
+morgan.token('body', req => JSON.stringify(req.body))
+app.use(morgan(':method :url :body :status :res[content-length] - :response-time ms'))
 
 let persons = [{
   "name": "Arto Hellas",
