@@ -3,3 +3,5 @@
 [Osa 1](osa1)
 
 [Osa 2](osa2)
+
+[Osa 3](osa3)
