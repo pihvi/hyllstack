@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,SACI,yBACA,WAAa","file":"static/css/main.11cc22ef.css","sourcesContent":[".success {\n    background-color: palegreen;\n    padding: 1em;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./src/index.css"],"sourceRoot":""}
