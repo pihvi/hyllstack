@@ -34,7 +34,6 @@ app.get('/api/persons', (req, res) => {
     .find({})
     .then(result => {
       res.send(result)
-      mongoose.connection.close()
     })
 })
 
@@ -61,7 +60,6 @@ app.post('/api/persons', (req, res) => {
     new Person(pers)
       .save()
       .then(response => {
-        mongoose.connection.close()
         res.staus(204).end()
       })
   }

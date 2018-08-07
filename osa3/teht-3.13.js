@@ -34,7 +34,6 @@ app.get('/api/persons', (req, res) => {
     .find({})
     .then(result => {
       res.send(result)
-      mongoose.connection.close()
     })
 })
 
