@@ -3,6 +3,7 @@ const morgan = require('morgan')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const Person = require('./models/person.js')
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -29,7 +30,12 @@ let persons = [{
 
 
 app.get('/api/persons', (req, res) => {
-  res.send(persons)
+  Person
+    .find({})
+    .then(result => {
+      res.send(result)
+      mongoose.connection.close()
+    })
 })
 
 app.get('/api/persons/:id', (req, res) => {
