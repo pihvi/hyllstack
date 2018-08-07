@@ -52,18 +52,17 @@ app.delete('/api/persons/:id', (req, res) => {
 // curl -XPOST http://localhost:3001/api/persons -d '{"name":"john","num":"123455"}' -H 'Content-Type: application/json'
 app.post('/api/persons', (req, res) => {
   const pers = {
+    id: Math.floor(Math.random() * 10000000),
     name: req.body.name,
     num: req.body.num
   }
   if (!pers.name || !pers.num) {
     res.status(400).send({message: 'missing name or number'})
+  } else if (persons.find(p => p.name === pers.name)) {
+    res.status(400).send({message: 'person already in data'})
   } else {
-    new Person(pers)
-      .save()
-      .then(response => {
-        mongoose.connection.close()
-        res.staus(204).end()
-      })
+    persons.push(pers)
+    res.send(pers)
   }
 })
 
