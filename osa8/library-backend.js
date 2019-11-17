@@ -116,11 +116,22 @@ const typeDefs = gql`
       published: Int!
       genres: [String!]!
     ): Book
+    editAuthor(
+      name: String!
+      setBornTo: Int!
+    ): Author
   }
 `
 
 const resolvers = {
   Mutation: {
+    editAuthor: (root, args) => {
+      const author = authors.find(x => x.name === args.name)
+      if (author) {
+        author.born = args.setBornTo
+      }
+      return author
+    },
     addBook: (root, args) => {
       const book = {...args, id: uuidv1()}
       books = books.concat(book)
