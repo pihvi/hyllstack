@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "apollo-server": "^2.9.7",
+    "mongoose": "^5.7.14",
+    "mongoose-unique-validator": "^2.0.3",
     "uuid": "^3.3.3"
   }
 }
