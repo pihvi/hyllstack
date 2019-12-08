@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useMutation} from '@apollo/react-hooks'
-import {gql} from 'apollo-boost'
+import {allBooks} from '../gql'
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
@@ -13,15 +13,7 @@ const NewBook = (props) => {
         addBook(title: $title, author: $author, published: $published, genres: $genres) {
           id
         }
-      }`, {refetchQueries: [{query: gql`
-{
-  allBooks  {
-    title
-    author
-    published
-  }
-}
-`}]})
+      }`, {refetchQueries: [{query: allBooks}]})
 
   if (!props.show) {
     return null
