@@ -1,9 +1,10 @@
 import React from 'react'
-import {useQuery} from '@apollo/react-hooks'
-import {allAuthors} from '../gql'
+import {useMutation, useQuery} from '@apollo/react-hooks'
+import * as gql from '../gql'
 
 const Authors = (props) => {
-  const {loading, error, data} = useQuery(allAuthors)
+  const {loading, error, data} = useQuery(gql.allAuthors)
+  const [editAuthor] = useMutation(gql.editAuthor)
 
   if (!props.show) return null
   if (loading) return 'Loading...'
@@ -33,7 +34,7 @@ const Authors = (props) => {
                 type="number"
                 defaultValue={a.born}
                 onChange={({target}) => {
-                  console.log(target.value)
+                  editAuthor({variables: {name: a.name, setBornTo: Number(target.value)}})
                 }}
               />
             </td>
