@@ -28,7 +28,15 @@ const Authors = (props) => {
         {authors.map(a =>
           <tr key={a.name}>
             <td>{a.name}</td>
-            <td>{a.born}</td>
+            <td>
+              <input
+                type="number"
+                defaultValue={a.born}
+                onChange={({target}) => {
+                  console.log(target.value)
+                }}
+              />
+            </td>
             <td>{a.bookCount}</td>
           </tr>
         )}
