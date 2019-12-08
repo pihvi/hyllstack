@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
+import {useMutation} from '@apollo/react-hooks'
+import {gql} from 'apollo-boost'
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
@@ -6,6 +8,12 @@ const NewBook = (props) => {
   const [published, setPublished] = useState('')
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
+  const [addBook] = useMutation(gql`
+      mutation AddBook($title: String!, $author: String!, $published: Int!, $genres: [String!]!) {
+        addBook(title: $title, author: $author, published: $published, genres: $genres) {
+          id
+        }
+      }`)
 
   if (!props.show) {
     return null
@@ -15,6 +23,7 @@ const NewBook = (props) => {
     e.preventDefault()
 
     console.log('add book..', title, author, published, genre, genres)
+    addBook({variables: {title, author, published: Number(published), genres}});
 
     setTitle('')
     setPublished('')
