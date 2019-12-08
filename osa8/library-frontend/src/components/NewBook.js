@@ -13,7 +13,15 @@ const NewBook = (props) => {
         addBook(title: $title, author: $author, published: $published, genres: $genres) {
           id
         }
-      }`)
+      }`, {refetchQueries: [{query: gql`
+{
+  allBooks  {
+    title
+    author
+    published
+  }
+}
+`}]})
 
   if (!props.show) {
     return null
