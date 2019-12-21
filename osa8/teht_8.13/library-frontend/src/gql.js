@@ -4,7 +4,6 @@ export const allBooks = gql`
 {
   allBooks  {
     title
-    author
     published
   }
 }

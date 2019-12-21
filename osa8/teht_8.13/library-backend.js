@@ -48,20 +48,20 @@ mongoose.connect(MONGODB_URI, {useNewUrlParser: true})
   })
 
 const typeDefs = gql`
-    type Book {
-        title: String!
-        published: Int!
-        author: String!
-        genres: [String!]!
-        id: ID!
-    }
+  type Book {
+      title: String!
+      published: Int!
+      author: Author!
+      genres: [String!]!
+      id: ID!
+  }
 
-    type Author {
-        name: String!
-        born: Int
-        id: ID!
-        bookCount: Int!
-    }
+  type Author {
+      name: String!
+      born: Int
+      id: ID!
+      bookCount: Int!
+  }
 
   type Query {
     hello: String!
