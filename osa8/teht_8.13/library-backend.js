@@ -89,27 +89,18 @@ const typeDefs = gql`
 const resolvers = {
   Mutation: {
     editAuthor: (root, args) => {
-      const author = authors.find(x => x.name === args.name)
-      if (author) {
-        author.born = args.setBornTo
-      }
-      return author
+      return null
     },
     addBook: (root, args) => {
-      const book = {...args, id: uuidv1()}
-      books = books.concat(book)
-      if (authors.find(x => x.name === book.author)) {
-        return book
-      } else {
-        authors = authors.concat({name: book.author, id: uuidv1()})
-        return book
-      }
+      delete args.author
+      const book = new Book({...args})
+      return book.save()
     }
   },
   Query: {
     hello: () => 'world',
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
+    bookCount: () => Book.collection.countDocuments(),
+    authorCount: () => Author.collection.countDocuments(),
     allBooks: (root, args) => {
       return Book.find({})
     },
