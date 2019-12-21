@@ -3,7 +3,8 @@ import {useQuery} from '@apollo/react-hooks'
 import {allBooks} from '../gql'
 
 const Books = (props) => {
-  const books = useQuery(allBooks).data.allBooks
+  const booksQuery = useQuery(allBooks)
+  const books = booksQuery.data ? booksQuery.data.allBooks : []
 
   if (!props.show) {
     return null
