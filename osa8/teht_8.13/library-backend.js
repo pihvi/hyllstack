@@ -91,8 +91,13 @@ const resolvers = {
     editAuthor: (root, args) => {
       return null
     },
-    addBook: (root, args) => {
-      delete args.author
+    addBook: async (root, args) => {
+      const name = args.author
+      args.author = await Author.findOne({name})
+      if (!args.author) {
+        const author = new Author({name})
+        args.author = await author.save()
+      }
       const book = new Book({...args})
       return book.save()
     }
@@ -104,7 +109,10 @@ const resolvers = {
     allBooks: (root, args) => {
       return Book.find({})
     },
-    allAuthors: () => Author.find({}),
+    allAuthors: async () => (await Author.find({})).map(author => {
+      author.bookCount = 99
+      return author
+    }),
   }
 }
 
