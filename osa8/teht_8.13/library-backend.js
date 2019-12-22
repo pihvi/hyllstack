@@ -88,8 +88,10 @@ const typeDefs = gql`
 
 const resolvers = {
   Mutation: {
-    editAuthor: (root, args) => {
-      return null
+    editAuthor: async (root, args) => {
+      const author = await Author.findOne({name: args.name})
+      author.born = args.setBornTo
+      return author.save()
     },
     addBook: async (root, args) => {
       const name = args.author
