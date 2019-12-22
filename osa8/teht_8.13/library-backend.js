@@ -106,8 +106,8 @@ const resolvers = {
     hello: () => 'world',
     bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
-    allBooks: (root, args) => {
-      return Book.find({})
+    allBooks: async (root, args) => {
+      return Book.find({}).populate('author')
     },
     allAuthors: async () => (await Author.find({})).map(author => {
       author.bookCount = 99
