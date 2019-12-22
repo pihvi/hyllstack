@@ -108,7 +108,7 @@ const resolvers = {
     hello: () => 'world',
     bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
-    allBooks: () => Book.find({}).populate('author'),
+    allBooks: () => Book.find().populate('author'),
     allAuthors: () => Author.aggregate([{
       $lookup:
         {
