@@ -111,7 +111,7 @@ const resolvers = {
     allBooks: async (root, args) => {
       return Book.find({}).populate('author')
     },
-    allAuthors: async () => (await Author.aggregate([{
+    allAuthors: async () => Author.aggregate([{
       $lookup:
         {
           from: 'books',
@@ -119,10 +119,13 @@ const resolvers = {
           foreignField: 'author',
           as: 'books'
         }
-    }])).map(author => {
-      author.bookCount = author.books.length
-      return author
-    }),
+    }, {
+      $project: {
+        name: true,
+        born: true,
+        bookCount: {$cond: {if: {$isArray: "$books"}, then: {$size: "$books"}, else: 0}}
+      }
+    }])
   }
 }
 
