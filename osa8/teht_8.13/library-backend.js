@@ -111,8 +111,16 @@ const resolvers = {
     allBooks: async (root, args) => {
       return Book.find({}).populate('author')
     },
-    allAuthors: async () => (await Author.find({})).map(author => {
-      author.bookCount = 99
+    allAuthors: async () => (await Author.aggregate([{
+      $lookup:
+        {
+          from: 'books',
+          localField: '_id',
+          foreignField: 'author',
+          as: 'books'
+        }
+    }])).map(author => {
+      author.bookCount = author.books.length
       return author
     }),
   }
