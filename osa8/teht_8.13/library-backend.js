@@ -108,10 +108,8 @@ const resolvers = {
     hello: () => 'world',
     bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
-    allBooks: async (root, args) => {
-      return Book.find({}).populate('author')
-    },
-    allAuthors: async () => Author.aggregate([{
+    allBooks: () => Book.find({}).populate('author'),
+    allAuthors: () => Author.aggregate([{
       $lookup:
         {
           from: 'books',
@@ -123,7 +121,7 @@ const resolvers = {
       $project: {
         name: true,
         born: true,
-        bookCount: {$cond: {if: {$isArray: "$books"}, then: {$size: "$books"}, else: 0}}
+        bookCount: {$cond: {if: {$isArray: '$books'}, then: {$size: '$books'}, else: 0}}
       }
     }])
   }
