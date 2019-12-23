@@ -1,5 +1,5 @@
 const {ApolloServer, gql} = require('apollo-server')
-const uuidv1 = require('uuid/v1')
+const {UserInputError} = require('apollo-server-errors')
 const mongoose = require('mongoose')
 
 mongoose.set('useFindAndModify', false)
@@ -48,42 +48,42 @@ mongoose.connect(MONGODB_URI, {useNewUrlParser: true})
   })
 
 const typeDefs = gql`
-  type Book {
-      title: String!
-      published: Int!
-      author: Author!
-      genres: [String!]!
-      id: ID!
-  }
+    type Book {
+        title: String!
+        published: Int!
+        author: Author!
+        genres: [String!]!
+        id: ID!
+    }
 
-  type Author {
-      name: String!
-      born: Int
-      id: ID!
-      bookCount: Int!
-  }
+    type Author {
+        name: String!
+        born: Int
+        id: ID!
+        bookCount: Int!
+    }
 
-  type Query {
-    hello: String!
-    bookCount: Int!
-    authorCount: Int!
-    allBooks(author: String, genre: String): [Book!]!
-    allAuthors: [Author!]!
-  }
+    type Query {
+        hello: String!
+        bookCount: Int!
+        authorCount: Int!
+        allBooks(author: String, genre: String): [Book!]!
+        allAuthors: [Author!]!
+    }
 
-  type Mutation {
-    addBook(
-      title: String!
-      author: String!
-      published: Int!
-      genres: [String!]!
-    ): Book
+    type Mutation {
+        addBook(
+            title: String!
+            author: String!
+            published: Int!
+            genres: [String!]!
+        ): Book
 
-    editAuthor(
-      name: String!
-      setBornTo: Int!
-    ): Author
-  }
+        editAuthor(
+            name: String!
+            setBornTo: Int!
+        ): Author
+    }
 `
 
 const resolvers = {
@@ -91,17 +91,35 @@ const resolvers = {
     editAuthor: async (root, args) => {
       const author = await Author.findOne({name: args.name})
       author.born = args.setBornTo
-      return author.save()
+      try {
+        await author.save()
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      }
     },
     addBook: async (root, args) => {
       const name = args.author
       args.author = await Author.findOne({name})
       if (!args.author) {
         const author = new Author({name})
-        args.author = await author.save()
+        try {
+          args.author = await author.save()
+        } catch (error) {
+          throw new UserInputError(error.message, {
+            invalidArgs: args,
+          })
+        }
       }
       const book = new Book({...args})
-      return book.save()
+      try {
+        await book.save()
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      }
     }
   },
   Query: {
@@ -110,13 +128,12 @@ const resolvers = {
     authorCount: () => Author.collection.countDocuments(),
     allBooks: () => Book.find().populate('author'),
     allAuthors: () => Author.aggregate([{
-      $lookup:
-        {
-          from: 'books',
-          localField: '_id',
-          foreignField: 'author',
-          as: 'books'
-        }
+      $lookup: {
+        from: 'books',
+        localField: '_id',
+        foreignField: 'author',
+        as: 'books'
+      }
     }, {
       $project: {
         name: true,
