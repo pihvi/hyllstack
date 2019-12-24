@@ -40,6 +40,20 @@ const schemaAuthor = new mongoose.Schema({
 })
 const Author = mongoose.model('Author', schemaAuthor)
 
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 3
+  },
+  favoriteGenre: {
+    type: String,
+    required: true
+  }
+})
+const User = mongoose.model('User', userSchema)
+
 console.log('connecting to', MONGODB_URI)
 mongoose.connect(MONGODB_URI, {useNewUrlParser: true})
   .then(() => {
@@ -151,7 +165,7 @@ const resolvers = {
       }
     },
     createUser: (root, args) => {
-      const user = new User({username: args.username})
+      const user = new User({username: args.username, favoriteGenre: args.favoriteGenre})
       return user.save()
         .catch(error => {
           throw new UserInputError(error.message, {
@@ -203,7 +217,7 @@ const server = new ApolloServer({
     const auth = req ? req.headers.authorization : null
     if (auth && auth.toLowerCase().startsWith('bearer ')) {
       const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET)
-      const currentUser = await User.findById(decodedToken.id).populate('friends')
+      const currentUser = await User.findById(decodedToken.id)
       return {currentUser}
     }
   }
