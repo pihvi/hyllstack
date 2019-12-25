@@ -5,15 +5,26 @@ import * as gql from '../gql'
 const Authors = (props) => {
   const {loading, error, data} = useQuery(gql.allAuthors)
   const [editAuthor] = useMutation(gql.editAuthor)
+  const [login] = useMutation(gql.login)
 
   if (!props.show) return null
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
 
   const authors = data.allAuthors
+  const user = React.createRef()
+  const pass = React.createRef()
+  const submit = () => {
+    login({variables: {username: user.current.value, password: pass.current.value}})
+  }
 
   return (
     <div>
+      <h2>login</h2>
+      username: <input ref={user} type="text"/>
+      <br/>
+      password: <input ref={pass} type="password"/>
+      <input type="submit" value="login" onClick={submit}/>
       <h2>authors</h2>
       <table>
         <tbody>
