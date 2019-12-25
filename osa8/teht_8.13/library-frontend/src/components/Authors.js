@@ -5,7 +5,7 @@ import * as gql from '../gql'
 const Authors = (props) => {
   const {loading, error, data} = useQuery(gql.allAuthors)
   const [editAuthor] = useMutation(gql.editAuthor)
-  const [login] = useMutation(gql.login)
+  const [login, loginResult] = useMutation(gql.login)
 
   if (!props.show) return null
   if (loading) return 'Loading...'
@@ -17,6 +17,9 @@ const Authors = (props) => {
   const submit = () => {
     login({variables: {username: user.current.value, password: pass.current.value}})
     pass.current.value = ''
+  }
+  if (loginResult.data && loginResult.data.login) {
+    localStorage.setItem('token', loginResult.data.login.value)
   }
 
   return (

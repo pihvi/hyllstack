@@ -20,7 +20,7 @@ const NewBook = (props) => {
     e.preventDefault()
 
     console.log('add book..', title, author, published, genre, genres)
-    addBook({variables: {title, author, published: Number(published), genres}});
+    addBook({variables: {title, author, published: Number(published), genres}})
 
     setTitle('')
     setPublished('')
