@@ -41,14 +41,14 @@ const NewBook = (props) => {
           title
           <input
             value={title}
-            onChange={({ target }) => setTitle(target.value)}
+            onChange={({target}) => setTitle(target.value)}
           />
         </div>
         <div>
           author
           <input
             value={author}
-            onChange={({ target }) => setAuthor(target.value)}
+            onChange={({target}) => setAuthor(target.value)}
           />
         </div>
         <div>
@@ -56,13 +56,13 @@ const NewBook = (props) => {
           <input
             type='number'
             value={published}
-            onChange={({ target }) => setPublished(target.value)}
+            onChange={({target}) => setPublished(target.value)}
           />
         </div>
         <div>
           <input
             value={genre}
-            onChange={({ target }) => setGenre(target.value)}
+            onChange={({target}) => setGenre(target.value)}
           />
           <button onClick={addGenre} type="button">add genre</button>
         </div>

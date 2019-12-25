@@ -20,6 +20,7 @@ const Authors = (props) => {
   }
   if (loginResult.data && loginResult.data.login) {
     localStorage.setItem('token', loginResult.data.login.value)
+    props.setToken(loginResult.data.login.value)
   }
 
   return (
@@ -46,6 +47,7 @@ const Authors = (props) => {
             <td>{a.name}</td>
             <td>
               <input
+                disabled={!props.token}
                 type="number"
                 defaultValue={a.born}
                 onChange={({target}) => {
