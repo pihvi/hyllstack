@@ -125,7 +125,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Mutation: {
-    editAuthor: async (root, args) => {
+    editAuthor: async (root, args, context) => {
       if (!context.currentUser) {
         throw new AuthenticationError("not authenticated")
       }
@@ -139,7 +139,7 @@ const resolvers = {
         })
       }
     },
-    addBook: async (root, args) => {
+    addBook: async (root, args, context) => {
       if (!context.currentUser) {
         throw new AuthenticationError("not authenticated")
       }

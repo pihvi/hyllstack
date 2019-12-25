@@ -16,6 +16,7 @@ const Authors = (props) => {
   const pass = React.createRef()
   const submit = () => {
     login({variables: {username: user.current.value, password: pass.current.value}})
+    pass.current.value = ''
   }
 
   return (
