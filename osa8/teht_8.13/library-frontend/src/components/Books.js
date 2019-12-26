@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useQuery} from '@apollo/react-hooks'
 import {allBooks} from '../gql'
 
 const Books = (props) => {
+  const [genre, setGenre] = useState('all genres')
   const booksQuery = useQuery(allBooks)
   const books = booksQuery.data ? booksQuery.data.allBooks : []
   if (!props.show) {
@@ -12,19 +13,21 @@ const Books = (props) => {
   return (
     <div>
       <h2>books</h2>
-
+      <p>in genre: <b>{genre}</b></p>
       <table>
         <tbody>
-          <tr>
-            <th>title</th>
-            <th>
-              author
-            </th>
-            <th>
-              published
-            </th>
-          </tr>
-          {books.map(a =>
+        <tr>
+          <th>title</th>
+          <th>
+            author
+          </th>
+          <th>
+            published
+          </th>
+        </tr>
+        {books
+          .filter(b => b.genres.includes(genre) || genre === 'all genres')
+          .map(a =>
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
@@ -33,7 +36,8 @@ const Books = (props) => {
           )}
         </tbody>
       </table>
-      {[...genres.values()].map(g => <button key={g}>{g}</button>)}
+      {[...genres.values(), 'all genres']
+        .map(g => <button disabled={genre === g} key={g} onClick={() => setGenre(g)}>{g}</button>)}
     </div>
   )
 }
