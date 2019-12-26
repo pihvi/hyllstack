@@ -1,0 +1,20 @@
+GET http://localhost:3003/api/blogs
+Accept: application/json
+
+<> 2019-12-26T081611.200.json
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Eka blogi",
+  "author": "antti",
+  "url": "https://helsinki.fi",
+  "likes": 123
+}
+
+<> 2019-12-26T081540.201.json
+
+###
+
