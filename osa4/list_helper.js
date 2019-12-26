@@ -12,6 +12,12 @@ const mostBlogs = blogs => _(blogs)
   .orderBy('blogs', 'desc')
   .first()
 
+const mostLikes = blogs => _(blogs)
+  .groupBy('author')
+  .map((xs, key) => ({author: key, likes: xs.reduce((sum, blog) => sum + blog.likes, 0)}))
+  .orderBy('likes', 'desc')
+  .first()
+
 module.exports = {
-  dummy, totalLikes, favoriteBlog, mostBlogs
+  dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes
 }
