@@ -30,6 +30,7 @@ ws.request(
   }).subscribe({
   next: (result) => {
     alert('Book added: ' + result.data.bookAdded.title)
+    client.resetStore()
   },
 })
 
