@@ -12,6 +12,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.14",
     "mongoose-unique-validator": "^2.0.3",
+    "subscriptions-transport-ws": "^0.9.16",
     "uuid": "^3.3.3"
   }
 }
