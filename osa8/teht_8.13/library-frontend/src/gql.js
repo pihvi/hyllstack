@@ -1,5 +1,12 @@
 import {gql} from 'apollo-boost'
 
+export const me = gql`
+{
+  me  {
+    favoriteGenre
+  }
+}
+`
 export const allBooks = gql`
 {
   allBooks  {
