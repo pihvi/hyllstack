@@ -15,13 +15,14 @@ const App = () => {
       <div>
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
-        <button onClick={() => setPage('recommendations')}>recommendations</button>
+        <button disabled={!token} onClick={() => setPage('recommendations')}>recommendations</button>
         <button disabled={!token} onClick={() => setPage('add')}>add book</button>
         <button disabled={!token} onClick={() => {
           setToken(null)
           localStorage.clear()
           client.resetStore()
-        }}>logout
+        }}>
+          logout
         </button>
       </div>
 

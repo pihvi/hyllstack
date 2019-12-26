@@ -1,11 +1,12 @@
 import React from 'react'
-import {useMutation, useQuery} from '@apollo/react-hooks'
+import {useApolloClient, useMutation, useQuery} from '@apollo/react-hooks'
 import * as gql from '../gql'
 
 const Authors = (props) => {
   const {loading, error, data} = useQuery(gql.allAuthors)
   const [editAuthor] = useMutation(gql.editAuthor)
   const [login, loginResult] = useMutation(gql.login)
+  const client = useApolloClient()
 
   if (!props.show) return null
   if (loading) return 'Loading...'
@@ -21,6 +22,7 @@ const Authors = (props) => {
   if (loginResult.data && loginResult.data.login) {
     localStorage.setItem('token', loginResult.data.login.value)
     props.setToken(loginResult.data.login.value)
+    client.resetStore()
   }
 
   return (
