@@ -30,6 +30,20 @@ describe('total likes', () => {
   })
 })
 
+describe('favorite blog', () => {
+  test('when list has many blogs equals the most liked of all', () => {
+    const result = listHelper.favoriteBlog(blogs)
+    expect(result).toEqual({
+      "__v": 0,
+      "_id": "5a422b3a1b54a676234d17f9",
+      "author": "Edsger W. Dijkstra",
+      "likes": 12,
+      "title": "Canonical string reduction",
+      "url": "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html"
+    })
+  })
+})
+
 const blogs = [
   {
     _id: "5a422a851b54a676234d17f7",
