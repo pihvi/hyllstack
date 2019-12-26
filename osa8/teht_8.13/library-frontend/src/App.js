@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
+import {useApolloClient} from "@apollo/react-hooks"
 
 const App = () => {
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(localStorage.getItem('token'))
+  const client = useApolloClient()
 
   return (
     <div>
@@ -13,6 +15,12 @@ const App = () => {
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
         <button disabled={!token} onClick={() => setPage('add')}>add book</button>
+        <button disabled={!token} onClick={() => {
+          setToken(null)
+          localStorage.clear()
+          client.resetStore()
+        }}>logout
+        </button>
       </div>
 
       <Authors
