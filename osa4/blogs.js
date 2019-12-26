@@ -14,7 +14,7 @@ const blogSchema = mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb://localhost/bloglist'
+const mongoUrl = 'mongodb+srv://fullstack:fullstack@cluster0-ostce.mongodb.net/pihvi?retryWrites=true'
 mongoose.connect(mongoUrl, {useNewUrlParser: true})
 
 app.use(cors())
@@ -39,6 +39,8 @@ app.post('/api/blogs', (request, response) => {
 })
 
 const PORT = 3003
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`)
+  console.log('Fetching blog count..')
+  console.log('Got', await Blog.collection.countDocuments(), 'blogs.')
 })
