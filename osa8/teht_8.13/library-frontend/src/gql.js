@@ -7,7 +7,8 @@ export const allBooks = gql`
     published
     author {
       name
-    }
+    },
+    genres
   }
 }
 `
