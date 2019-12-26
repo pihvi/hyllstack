@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
-const {ApolloServer, gql} = require('apollo-server')
+const {ApolloServer, gql, PubSub} = require('apollo-server')
 const {UserInputError, AuthenticationError} = require('apollo-server-errors')
-
+const pubsub = new PubSub()
 mongoose.set('useFindAndModify', false)
 const MONGODB_URI = 'mongodb+srv://fullstack:fullstack@cluster0-ostce.mongodb.net/pihvi?retryWrites=true'
 const JWT_SECRET = 'TODO: put this key somewhere else :)'
@@ -121,6 +121,10 @@ const typeDefs = gql`
             password: String!
         ): Token
     }
+
+    type Subscription {
+        bookAdded: Book!
+    }
 `
 
 const resolvers = {
@@ -158,6 +162,7 @@ const resolvers = {
       const book = new Book({...args})
       try {
         await book.save()
+        pubsub.publish('BOOK_ADDED', {bookAdded: book})
       } catch (error) {
         throw new UserInputError(error.message, {
           invalidArgs: args,
@@ -207,7 +212,8 @@ const resolvers = {
     me: (root, args, context) => {
       return context.currentUser
     }
-  }
+  },
+  Subscription: {bookAdded: {subscribe: () => pubsub.asyncIterator(['BOOK_ADDED'])},},
 }
 
 const server = new ApolloServer({
@@ -223,6 +229,7 @@ const server = new ApolloServer({
   }
 })
 
-server.listen().then(({ url }) => {
+server.listen().then(({url, subscriptionsUrl}) => {
   console.log(`Server ready at ${url}`)
+  console.log(`Subscriptions ready at ${subscriptionsUrl}`)
 })
