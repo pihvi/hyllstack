@@ -14,7 +14,10 @@ const blogSchema = mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb+srv://fullstack:fullstack@cluster0-ostce.mongodb.net/pihvi?retryWrites=true'
+let mongoUrl = 'mongodb+srv://fullstack:fullstack@cluster0-ostce.mongodb.net/pihvi?retryWrites=true'
+if (process.env.NODE_ENV === 'test' && process.env.TEST_MONGODB_URI) {
+  mongoUrl = process.env.TEST_MONGODB_URI
+}
 mongoose.connect(mongoUrl, {useNewUrlParser: true})
 
 app.use(cors())
