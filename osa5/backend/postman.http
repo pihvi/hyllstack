@@ -16,3 +16,7 @@ Content-Type: application/json
   "password": "qqq"
 }
 ###
+
+GET http://localhost:3003/api/blogs
+Content-Type: application/json
+###

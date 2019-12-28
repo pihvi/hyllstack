@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import Blog from './components/Blog'
+import bs from './services/blogs'
 
 function App() {
   const [user, setUser] = useState(null)
   const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
-    console.log('boom')
-  })
+    bs.getAll().then(xs => setBlogs(xs))
+  }, [])
 
   const username = React.createRef()
   const password = React.createRef()
