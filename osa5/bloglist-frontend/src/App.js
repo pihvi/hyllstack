@@ -37,6 +37,7 @@ function App() {
     return (
       <div>
         <h2>blogs</h2>
+        {user.name} logged in
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog}/>
         )}
