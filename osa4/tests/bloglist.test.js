@@ -15,6 +15,19 @@ afterAll(async () => {
   await server.close()
 })
 
+describe('/api/blogs POST', () => {
+  test('adds blog count by one', async () => {
+    const result = await api
+      .post('/api/blogs')
+      .send({title: 'test add'})
+      .expect(201)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+    expect(await Blog.collection.countDocuments()).toBe(count + 1)
+    expect(result.body.title).toBe('test add')
+    await Blog.deleteOne({title: 'test add'})
+  })
+})
+
 describe('/api/blogs GET', () => {
   let result
   beforeAll(async () => {
