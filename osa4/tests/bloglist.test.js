@@ -15,11 +15,23 @@ afterAll(async () => {
   await server.close()
 })
 
-test('returns correct blog amount as JSON', async () => {
-  const result = await api
-    .get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', 'application/json; charset=utf-8')
-  expect(result.body.length).toBe(count)
-  expect(typeof result.body[0]).toBe('object')
+describe('/api/blogs GET', () => {
+  let result
+  beforeAll(async () => {
+    result = await api
+      .get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', 'application/json; charset=utf-8')
+  })
+
+  test('returns correct blog amount as JSON', async () => {
+    expect(result.body.length).toBe(count)
+    expect(typeof result.body[0]).toBe('object')
+  })
+
+  test('has "id" as identifier', async () => {
+    result.body.forEach(blog => {
+      expect(blog.id).toBeDefined()
+    })
+  })
 })
