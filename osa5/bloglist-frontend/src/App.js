@@ -37,7 +37,7 @@ function App() {
     return (
       <div>
         <h2>blogs</h2>
-        {user.name} logged in
+        {user.name} logged in <input type="submit" value="logout" onClick={() => setUser(null)}/>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog}/>
         )}
