@@ -35,7 +35,9 @@ function App() {
     author.current.value = ''
     url.current.value = ''
     axios
-      .post('/api/blogs', payload)
+      .post('/api/blogs', payload, {
+        headers: {authorization: `bearer ${user.token}`}
+      })
       .then(response => {
         console.log('create', response.data)
       })
