@@ -18,7 +18,8 @@ let mongoUrl = 'mongodb+srv://fullstack:fullstack@cluster0-ostce.mongodb.net/pih
 if (process.env.NODE_ENV === 'test' && process.env.TEST_MONGODB_URI) {
   mongoUrl = process.env.TEST_MONGODB_URI
 }
-mongoose.connect(mongoUrl, {useNewUrlParser: true})
+module.exports.mongo = mongoose.connect(mongoUrl, {useNewUrlParser: true})
+module.exports.app = app
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -42,7 +43,7 @@ app.post('/api/blogs', (request, response) => {
 })
 
 const PORT = 3003
-app.listen(PORT, async () => {
+module.exports.server = app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`)
   console.log('Fetching blog count..')
   console.log('Got', await Blog.collection.countDocuments(), 'blogs.')
