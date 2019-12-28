@@ -6,6 +6,7 @@ import axios from "axios";
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
   const [blogs, setBlogs] = useState([])
+  const [notifikat, setNotsku] = useState('')
 
   useEffect(() => {
     bs.getAll().then(xs => setBlogs(xs))
@@ -16,6 +17,12 @@ function App() {
   const title = React.createRef()
   const author = React.createRef()
   const url = React.createRef()
+  const notsku = msg => {
+    setNotsku(msg)
+    setTimeout(() => {
+      setNotsku('')
+    }, 3000)
+  }
   const submit = () => {
     const payload = {username: username.current.value, password: password.current.value}
     password.current.value = ''
@@ -26,7 +33,7 @@ function App() {
         localStorage.setItem('user', JSON.stringify(response.data))
       })
       .catch(() => {
-        alert('Login failed')
+        notsku('Login failed')
       })
   }
   const createClick = () => {
@@ -40,6 +47,7 @@ function App() {
       })
       .then(response => {
         setBlogs(blogs.concat([response.data]))
+        notsku('Create successful: ' + response.data.title)
       })
       .catch(() => {
         alert('create failed')
@@ -49,6 +57,7 @@ function App() {
     return (
       <div>
         <h2>login</h2>
+        <h3>{notifikat}</h3>
         username: <input key="uname" ref={username} type="text"/>
         <br/>
         password: <input key="pwd" ref={password} type="password"/>
@@ -59,6 +68,7 @@ function App() {
     return (
       <div>
         <h2>blogs</h2>
+        <h3>{notifikat}</h3>
         {user.name} logged in <input type="submit" value="logout" onClick={() => {
         setUser(null)
         localStorage.clear()
