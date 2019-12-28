@@ -13,6 +13,9 @@ function App() {
 
   const username = React.createRef()
   const password = React.createRef()
+  const title = React.createRef()
+  const author = React.createRef()
+  const url = React.createRef()
   const submit = () => {
     const payload = {username: username.current.value, password: password.current.value}
     password.current.value = ''
@@ -26,14 +29,28 @@ function App() {
         alert('Login failed')
       })
   }
+  const createClick = () => {
+    const payload = {title: title.current.value, author: author.current.value, url: url.current.value}
+    title.current.value = ''
+    author.current.value = ''
+    url.current.value = ''
+    axios
+      .post('/api/blogs', payload)
+      .then(response => {
+        console.log('create', response.data)
+      })
+      .catch(() => {
+        alert('create failed')
+      })
+  }
   if (user === null) {
     return (
       <div>
         <h2>login</h2>
-        username: <input ref={username} type="text"/>
+        username: <input key="uname" ref={username} type="text"/>
         <br/>
-        password: <input ref={password} type="password"/>
-        <input type="submit" value="login" onClick={submit}/>
+        password: <input key="pwd" ref={password} type="password"/>
+        <input key="login" type="submit" value="login" onClick={submit}/>
       </div>
     )
   } else {
@@ -44,6 +61,16 @@ function App() {
         setUser(null)
         localStorage.clear()
       }}/>
+        <h3>create new</h3>
+        title: <input key="title" ref={title} type="text"/>
+        <br/>
+        author: <input key="author" ref={author} type="text"/>
+        <br/>
+        url: <input key="url" ref={url} type="text"/>
+        <br/>
+        <input key="create" type="submit" value="create" onClick={createClick}/>
+        <br/>
+        <br/>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog}/>
         )}
