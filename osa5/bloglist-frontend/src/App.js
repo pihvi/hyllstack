@@ -39,7 +39,7 @@ function App() {
         headers: {authorization: `bearer ${user.token}`}
       })
       .then(response => {
-        console.log('create', response.data)
+        setBlogs(blogs.concat([response.data]))
       })
       .catch(() => {
         alert('create failed')
