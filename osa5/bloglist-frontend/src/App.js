@@ -4,7 +4,7 @@ import bs from './services/blogs'
 import axios from "axios";
 
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
   const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
@@ -18,7 +18,10 @@ function App() {
     password.current.value = ''
     axios
       .post('/api/login', payload)
-      .then(response => setUser(response.data))
+      .then(response => {
+        setUser(response.data)
+        localStorage.setItem('user', JSON.stringify(response.data))
+      })
       .catch(() => {
         alert('Login failed')
       })
@@ -37,7 +40,10 @@ function App() {
     return (
       <div>
         <h2>blogs</h2>
-        {user.name} logged in <input type="submit" value="logout" onClick={() => setUser(null)}/>
+        {user.name} logged in <input type="submit" value="logout" onClick={() => {
+        setUser(null)
+        localStorage.clear()
+      }}/>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog}/>
         )}
