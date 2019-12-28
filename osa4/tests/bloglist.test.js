@@ -15,12 +15,12 @@ afterAll(async () => {
   await server.close()
 })
 
-describe('/api/blogs POST', () => {
+describe('successful /api/blogs POST', () => {
   let result
   beforeAll(async () => {
     result = await api
       .post('/api/blogs')
-      .send({title: 'test add'})
+      .send({title: 'test add', url: 'http://example.com'})
       .expect(201)
       .expect('Content-Type', 'application/json; charset=utf-8')
   })
@@ -36,6 +36,20 @@ describe('/api/blogs POST', () => {
   test('sets default likes to 0', async () => {
     expect(result.body.likes).toBe(0)
   })
+})
+
+test('missing title or url fails adding', async () => {
+  await api.post('/api/blogs').send({title: 'test add'})
+    .expect(400)
+  expect(await Blog.collection.countDocuments()).toBe(count)
+  await api.post('/api/blogs').send({url: 'http://example.com'})
+    .expect(400)
+  expect(await Blog.collection.countDocuments()).toBe(count)
+  await api.post('/api/blogs')
+    .send({title: 'test add', url: 'http://example.com'})
+    .expect(201)
+  expect(await Blog.collection.countDocuments()).toBe(count + 1)
+  await Blog.deleteOne({title: 'test add'})
 })
 
 describe('/api/blogs GET', () => {

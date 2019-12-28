@@ -42,12 +42,15 @@ app.get('/api/blogs', (request, response) => {
 
 app.post('/api/blogs', (request, response) => {
   const blog = new Blog(request.body)
-
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
+  if (blog.title && blog.url) {
+    blog
+      .save()
+      .then(result => {
+        response.status(201).json(result)
+      })
+  } else {
+    response.status(400).end()
+  }
 })
 
 const PORT = 3003
