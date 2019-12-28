@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Blog from './components/Blog'
 import bs from './services/blogs'
+import axios from "axios";
 
 function App() {
   const [user, setUser] = useState(null)
@@ -13,9 +14,14 @@ function App() {
   const username = React.createRef()
   const password = React.createRef()
   const submit = () => {
-    console.log('login', {variables: {username: username.current.value, password: password.current.value}})
+    const payload = {username: username.current.value, password: password.current.value}
     password.current.value = ''
-    setUser('test')
+    axios
+      .post('/api/login', payload)
+      .then(response => setUser(response.data))
+      .catch(() => {
+        alert('Login failed')
+      })
   }
   if (user === null) {
     return (
