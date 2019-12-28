@@ -29,3 +29,15 @@ Content-Type: application/json
 <> 2019-12-26T081540.201.json
 
 ###
+
+PATCH http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "id": "5e074cf9de2a6ea2659d72ba",
+  "title": "Eka blogi - päivitetty"
+}
+
+<> 2019-12-26T081540.201.json
+
+###
