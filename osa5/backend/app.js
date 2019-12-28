@@ -1,11 +1,10 @@
-const config = require('./utils/config')
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-const { tokenExtractor, errorHandler } = require('./utils/middleware')
+const {tokenExtractor, errorHandler} = require('./utils/middleware')
 
 const loginRouter = require('./controllers/login')
 const blogsRouter = require('./controllers/blogs')
@@ -14,9 +13,10 @@ const usersRouter = require('./controllers/users')
 app.use(cors())
 app.use(bodyParser.json())
 
-console.log('connecting to', config.MONGODB_URI)
+const mongoUrl = 'mongodb+srv://fullstack:fullstack@cluster0-ostce.mongodb.net/pihvi5?retryWrites=true'
+console.log('connecting to', mongoUrl)
 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
+mongoose.connect(mongoUrl, {useNewUrlParser: true})
   .then(() => {
     console.log('connected to MongoDB')
   })
