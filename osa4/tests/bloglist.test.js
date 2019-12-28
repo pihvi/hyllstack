@@ -16,15 +16,25 @@ afterAll(async () => {
 })
 
 describe('/api/blogs POST', () => {
-  test('adds blog count by one', async () => {
-    const result = await api
+  let result
+  beforeAll(async () => {
+    result = await api
       .post('/api/blogs')
       .send({title: 'test add'})
       .expect(201)
       .expect('Content-Type', 'application/json; charset=utf-8')
+  })
+  afterAll(async () => {
+    await Blog.deleteOne({title: 'test add'})
+  })
+
+  test('adds blog count by one', async () => {
     expect(await Blog.collection.countDocuments()).toBe(count + 1)
     expect(result.body.title).toBe('test add')
-    await Blog.deleteOne({title: 'test add'})
+  })
+
+  test('sets default likes to 0', async () => {
+    expect(result.body.likes).toBe(0)
   })
 })
 
