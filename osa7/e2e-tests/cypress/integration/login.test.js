@@ -1,5 +1,5 @@
-describe('Login ', () => {
-  it('front page can be opened and login works', () => {
+describe('After successful login', () => {
+  before(() => {
     cy.visit('http://localhost:3000')
     cy.contains('login')
     cy.contains('blogs').should('not.exist')
@@ -9,7 +9,13 @@ describe('Login ', () => {
       .type('qqq')
     cy.get('input[type=submit]')
       .click()
+  })
+
+  it('login disappears', () => {
     cy.contains('login').should('not.exist')
+  })
+
+  it('blogs are displayed', () => {
     cy.contains('blogs')
   })
 })
