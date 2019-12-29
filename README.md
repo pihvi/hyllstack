@@ -13,3 +13,6 @@
 [Osa 5](osa5)
 
 [Osa 7](osa7/e2e-tests/cypress/integration/)
+
+[Osa 8](osa8)
+
