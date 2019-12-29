@@ -11,3 +11,5 @@
 [Osa 4](osa4)
 
 [Osa 5](osa5)
+
+[Osa 7](osa7)
