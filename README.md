@@ -12,4 +12,4 @@
 
 [Osa 5](osa5)
 
-[Osa 7](osa7)
+[Osa 7](osa7/e2e-tests/cypress/integration/)
