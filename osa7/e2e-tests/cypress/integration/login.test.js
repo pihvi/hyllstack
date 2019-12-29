@@ -1,5 +1,6 @@
 describe('After successful login', () => {
   before(() => {
+    cy.clock(0)
     cy.visit('http://localhost:3000')
     cy.contains('login')
     cy.contains('blogs').should('not.exist')
@@ -17,5 +18,10 @@ describe('After successful login', () => {
 
   it('blogs are displayed', () => {
     cy.contains('blogs')
+  })
+
+  it('current date is displayed', () => {
+    cy.clock(0)
+    cy.contains('It is now Thu Jan 01 1970')
   })
 })

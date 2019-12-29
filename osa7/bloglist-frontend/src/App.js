@@ -73,6 +73,7 @@ function App() {
         setUser(null)
         localStorage.clear()
       }}/>
+        <h3>It is now {new Date().toDateString()}</h3>
         <h3>create new</h3>
         title: <input key="title" ref={title} type="text"/>
         <br/>
