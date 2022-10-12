@@ -7,7 +7,7 @@
     "start": "node library-backend.js"
   },
   "dependencies": {
-    "apollo-server": "^2.9.7",
+    "apollo-server": "^2.25.4",
     "apollo-server-errors": "^2.3.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.14",
